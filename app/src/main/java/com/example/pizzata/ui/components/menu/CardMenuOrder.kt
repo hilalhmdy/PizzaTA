@@ -1,12 +1,7 @@
 package com.example.pizzata.ui.components.menu
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -84,11 +79,15 @@ fun CardMenuOrder(
                     },
                     shape = Shapes_Larger.small,
                     colors = ButtonDefaults.buttonColors(PrimaryColor),
+                    contentPadding = PaddingValues(0.dp),
                     modifier = modifier
                         .width(54.dp)
                         .height(20.dp)
                 ) {
-                    Text(text = "Pesan")
+                    Text(
+                        text = "Pesan",
+                        fontSize = 8.sp,
+                        fontWeight = FontWeight.Medium)
                 }
             }
         }
