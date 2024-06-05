@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">PizzaTA</string>
+
+    <string name="saldo">Saldo Anda</string>
+    <string name="poin">Coin Anda</string>
+
+    <string name="favmenu_title">Menu Favorite</string>
+    <string name="most_popular">Most Popular Deals</string>
+    <string name="category">Pizza</string>
+    <string name="image_slider">Slider Anda</string>
+
+</resources>
