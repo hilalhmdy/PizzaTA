@@ -26,6 +26,7 @@ import com.example.pizzata.model.Menu
 import com.example.pizzata.model.dummyActivity
 import com.example.pizzata.model.dummyCategory
 import com.example.pizzata.model.dummyMenu
+import com.example.pizzata.ui.components.homapage.BannerSlider
 import com.example.pizzata.ui.components.homapage.CardActivityViews
 import com.example.pizzata.ui.components.homapage.CardCategoryViews
 import com.example.pizzata.ui.components.homapage.CardMenuFavViews
@@ -84,21 +85,7 @@ fun HomeScreenContent(
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ){
-        Box(
-            modifier = Modifier
-                .height(192.dp)
-                .fillMaxWidth()
-                .background(
-                    color = PrimaryColor
-                )
-        ){
-            Image(
-                painter = painterResource(R.drawable.banner1),
-                contentDescription = "null",
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-        }
+        BannerSlider()
         CategoryRow(dummyCategory )
         Category(
             modifier = modifier
@@ -258,58 +245,4 @@ fun Category(
         )
     }
 }
-
-//@OptIn(ExperimentalFoundationApi::class, ExperimentalPagerApi::class)
-//@Composable
-//fun ImageSlider(
-//    modifier: Modifier = Modifier
-//){
-//    Column {
-//        HorizontalPager(
-//            state = pagerState,
-//            contentPadding = PaddingValues(horizontal = 16.dp),
-//            modifier = modifier
-//                .height(114.dp)
-//                .fillMaxWidth()
-//        ) { page ->
-//            Card(
-//                shape = RoundedCornerShape(12.dp),
-//                modifier = Modifier
-//                    .graphicsLayer {
-//                        val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
-//
-//                        lerp(
-//                            start = 0.85f,
-//                            stop = 1f,
-//                            fraction = 1f - pageOffset.coerceIn(0f, 1f)
-//                        ).also { scale ->
-//                            scaleX = scale
-//                            scaleY = scale
-//                        }
-//
-//                        alpha = lerp(
-//                            start = 0.5f,
-//                            stop = 1f,
-//                            fraction = 1f - pageOffset.coerceIn(0f, 1f)
-//                        )
-//                    }
-//            ) {
-//                Image(
-//                    painter = imageSlider[page],
-//                    contentDescription = stringResource(R.string.image_slider),
-//                    contentScale = ContentScale.Crop,
-//                    modifier = Modifier.fillMaxSize()
-//                )
-//            }
-//        }
-//
-//        HorizontalPagerIndicator(
-//            pagerState = pagerState,
-//            modifier = Modifier
-//                .align(Alignment.CenterHorizontally)
-//                .padding(16.dp)
-//        )
-//    }
-//}
-//
 

@@ -1,5 +1,6 @@
 package com.example.pizzata.ui.components.menu
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,15 +10,21 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pizzata.R
+import com.example.pizzata.ui.theme.BorderCard
 import com.example.pizzata.ui.theme.PizzaTATheme
 import com.example.pizzata.ui.theme.PrimaryColor
+import com.example.pizzata.ui.theme.Shapes
 import com.example.pizzata.ui.theme.Shapes_Larger
+import com.example.pizzata.ui.theme.TextColor
 
 @Composable
 fun CardMenuOrder(
@@ -30,9 +37,11 @@ fun CardMenuOrder(
 ){
     Card(
         modifier = modifier
-            .width(300.dp)
+            .width(340.dp)
             .height(80.dp),
-        shape = RoundedCornerShape(10.dp)
+        shape = RoundedCornerShape(10.dp),
+        elevation = 0.dp,
+        border = BorderStroke(0.5.dp, BorderCard)
     ){
         Row(
             modifier = modifier
@@ -43,23 +52,25 @@ fun CardMenuOrder(
                 painter = painterResource(image),
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(top=4.dp)
+                    .padding(top = 4.dp)
                     .size(48.dp)
             )
             Column(
                 modifier = Modifier
-                .padding(start = 11.dp, top = 4.dp)
-                .weight(1.0f)
+                    .padding(start = 11.dp, top = 4.dp)
+                    .weight(1.0f)
             ) {
                 Text(
                     text = title,
                     maxLines = 1,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.Bold
                 )
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = describe,
                     maxLines = 3,
+                    color = TextColor,
                     fontSize = 8.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -73,11 +84,12 @@ fun CardMenuOrder(
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium
                 )
+                Spacer(modifier = Modifier.height(4.dp))
                 Button(
                     onClick = {
                         onClick()
                     },
-                    shape = Shapes_Larger.small,
+                    shape = Shapes.medium,
                     colors = ButtonDefaults.buttonColors(PrimaryColor),
                     contentPadding = PaddingValues(0.dp),
                     modifier = modifier
@@ -86,6 +98,7 @@ fun CardMenuOrder(
                 ) {
                     Text(
                         text = "Pesan",
+                        color = Color.White,
                         fontSize = 8.sp,
                         fontWeight = FontWeight.Medium)
                 }

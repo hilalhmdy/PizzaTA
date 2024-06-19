@@ -134,7 +134,8 @@ fun TopBarMenuOrder(
                     .padding(start = 60.dp)
             )
         },
-        actions = {}
+        actions = {},
+        elevation = 0.dp,
     )
 }
 
