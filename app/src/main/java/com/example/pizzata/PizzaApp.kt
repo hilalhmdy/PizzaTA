@@ -43,7 +43,6 @@ import com.example.pizzata.ui.theme.PrimaryBackgroundColor
 import com.example.pizzata.ui.theme.PrimaryColor
 import com.example.pizzata.ui.navigation.NavigationItem
 
-
 @Composable
 fun PizzaApp(
     modifier: Modifier = Modifier,
@@ -216,4 +215,3 @@ fun BottomPreview() {
         PizzaApp()
     }
 }
-

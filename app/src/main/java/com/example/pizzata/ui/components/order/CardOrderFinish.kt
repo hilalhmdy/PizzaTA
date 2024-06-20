@@ -38,7 +38,7 @@ import com.example.pizzata.ui.theme.PrimaryColor
 import com.example.pizzata.ui.theme.Shapes
 
 @Composable
-fun CardOrderProgress(
+fun CardOrderFinish(
     id : String,
     item: String,
     time : String,
@@ -142,7 +142,7 @@ fun CardOrderProgress(
                     .height(20.dp)
             ) {
                 Text(
-                    text = "On Going",
+                    text = "Reorder",
                     color = Color.White,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium)
@@ -154,9 +154,9 @@ fun CardOrderProgress(
 
 @Composable
 @Preview(showBackground = true)
-fun CardOrderPreview() {
+fun CardOrderFinishPreview() {
     PizzaTATheme {
-        CardOrderProgress(
+        CardOrderFinish(
             "ID121212131",
             "2",
             "17.40",
