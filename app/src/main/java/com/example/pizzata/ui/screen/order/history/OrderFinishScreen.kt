@@ -1,33 +1,46 @@
 package com.example.pizzata.ui.screen.order.history
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LeadingIconTab
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Tab
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.pizzata.R
 import com.example.pizzata.model.OrderFinish
 import com.example.pizzata.ui.components.order.CardOrderFinish
-import com.example.pizzata.ui.screen.order.OrderTopBar
+import com.example.pizzata.ui.theme.BorderCard
+import com.example.pizzata.ui.theme.PrimaryColor
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
@@ -58,30 +71,72 @@ fun TabsHistory(tabs: List<TabItemHistory>, pagerState: PagerState) {
         backgroundColor = Color.Transparent,
         selectedTabIndex = pagerState.currentPage,
         contentColor = Color.White,
-        indicator = {
-//            TabRowDefaults.Indicator(
-//                modifier = Modifier
-//                    .pagerTabIndicatorOffset(pagerState, tabPositions)
-//                    .height(0.dp)
-//            )
-        }) {
+        indicator = {}
+    ) {
         tabs.forEachIndexed { index, tab ->
-            // OR Tab()
-            LeadingIconTab(
-                icon = {},
-                text = {
-                    Text(
-                        text = tab.title,
-                        color = Color(0xFF1A395A)
-                    )
-                },
+            Tab(
                 selected = pagerState.currentPage == index,
                 onClick = {
                     scope.launch {
                         pagerState.animateScrollToPage(index)
                     }
                 }
-            )
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .background(
+                            if (pagerState.currentPage == index) PrimaryColor else Color.White,
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                        .border(1.dp, BorderCard, RoundedCornerShape(10.dp))
+                        .padding(horizontal = 16.dp, vertical = 12.dp)
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.pizza),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(top = 0.dp)
+                            .size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = tab.title,
+                        color = if (pagerState.currentPage == index) Color.White else Color.Black
+                    )
+                }
+            }
+            // OR Tab()
+//            Box(
+//                modifier = Modifier
+//                    .height(48.dp)
+//                    .width(20.dp)
+//                    .background(if (pagerState.currentPage == index) PrimaryColor else Color.Transparent)
+//            ) {
+//            LeadingIconTab(
+//                icon = {
+//                    Image(
+//                        painter = painterResource(R.drawable.pizza),
+//                        contentDescription = null,
+//                        modifier = Modifier
+//                            .padding(top = 0.dp)
+//                            .size(20.dp)
+//                    )
+//                },
+//                text = {
+//                    Text(
+//                        text = tab.title,
+//                        color = if (pagerState.currentPage == index) Color.White else Color(0xFF1A395A)
+//                    )
+//                },
+//                selected = pagerState.currentPage == index,
+//                onClick = {
+//                    scope.launch {
+//                        pagerState.animateScrollToPage(index)
+//                    }
+//                }
+//            ) }
         }
     }
 }

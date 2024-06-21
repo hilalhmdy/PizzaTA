@@ -42,6 +42,7 @@ import com.example.pizzata.ui.theme.PizzaTATheme
 import com.example.pizzata.ui.theme.PrimaryBackgroundColor
 import com.example.pizzata.ui.theme.PrimaryColor
 import com.example.pizzata.ui.navigation.NavigationItem
+import com.example.pizzata.ui.screen.order.OrderScreen
 
 @Composable
 fun PizzaApp(
@@ -93,6 +94,9 @@ fun PizzaApp(
                         navController.navigate(Screen.Menu.route)
                     }
                 )
+            }
+            composable(Screen.Order.route){
+                OrderScreen()
             }
         }
     }
