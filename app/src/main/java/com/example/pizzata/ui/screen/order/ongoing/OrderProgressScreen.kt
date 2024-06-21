@@ -1,4 +1,4 @@
-package com.example.pizzata.ui.screen.order
+package com.example.pizzata.ui.screen.order.ongoing
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,29 +13,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.pizzata.model.OrderFinish
-import com.example.pizzata.model.dummyOrderFinish
-import com.example.pizzata.ui.components.order.CardOrderFinish
+import com.example.pizzata.model.OrderProgress
+import com.example.pizzata.model.dummyOrderProgress
+import com.example.pizzata.ui.components.order.CardOrderProgress
 
 @Composable
-fun OrderFinishScreen() {
+fun OrderProgressScreen(
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
     ) {
-        ListOrderFinish(dummyOrderFinish)
+        ListOrderProgress(dummyOrderProgress)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun MoviesScreenPreview() {
-    OrderFinishScreen()
+fun OrderProgressScreenPreview() {
+    OrderProgressScreen()
 }
 
 @Composable
-fun ListOrderFinish(
-    listOrderFinish: List<OrderFinish>,
+fun ListOrderProgress(
+    listOrderProgress: List<OrderProgress>,
     modifier : Modifier = Modifier,
 ){
     LazyColumn(
@@ -46,8 +48,8 @@ fun ListOrderFinish(
             .fillMaxWidth()
             .padding(top = 16.dp)
     ){
-        items(listOrderFinish){data ->
-            CardOrderFinish(
+        items(listOrderProgress){data ->
+            CardOrderProgress(
                 id = data.id,
                 item = data.item,
                 time = data.time,
@@ -56,6 +58,5 @@ fun ListOrderFinish(
                 onClick = {}
             )
         }
-
     }
 }

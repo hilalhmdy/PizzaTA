@@ -88,7 +88,8 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
                 icon = {},
                 text = {
                     Text(
-                        text = tab.title
+                        text = tab.title,
+                        color = Color(0xFF1A395A)
                     )
                 },
                 selected = pagerState.currentPage == index,
