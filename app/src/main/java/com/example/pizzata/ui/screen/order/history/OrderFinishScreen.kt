@@ -1,6 +1,5 @@
 package com.example.pizzata.ui.screen.order.history
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -50,7 +49,7 @@ fun OrderFinishScreen() {
     val tabsHistory = listOf(TabItemHistory.DeliveryOrder, TabItemHistory.TakeawayOrder, TabItemHistory.DineInOrder)
     val pagerState = rememberPagerState()
 
-    Column(modifier = Modifier.padding(top = 10.dp)) {
+    Column(modifier = Modifier.padding(top = 20.dp)) {
         TabsHistory(tabs = tabsHistory, pagerState = pagerState)
         TabsContentHistory(tabs = tabsHistory, pagerState = pagerState)
     }

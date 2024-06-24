@@ -20,7 +20,7 @@ import com.example.pizzata.R
 import com.example.pizzata.ui.theme.PizzaTATheme
 
 @Composable
-fun CardCategoryViews(
+fun CardRewardsViews(
     icon: Int,
     title: String,
     input: Int,
@@ -54,7 +54,7 @@ fun CardCategoryViews(
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = "$input Slice",
+                    text = "Level $input",
                     maxLines = 1,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.ExtraBold
@@ -66,12 +66,12 @@ fun CardCategoryViews(
 
 @Composable
 @Preview(showBackground = true)
-fun CardCategoryPreview() {
+fun CardRewardsPreview() {
     PizzaTATheme {
-        CardCategoryViews(
-            R.drawable.money,
-            "Pizza Order",
-            30000
+        CardRewardsViews(
+            R.drawable.pizza,
+            "Rewards",
+            2
         )
     }
 }

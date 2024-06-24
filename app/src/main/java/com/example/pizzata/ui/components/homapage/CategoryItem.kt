@@ -33,7 +33,7 @@ fun CategoryItem(
             painter = painterResource(category.imageCategory),
             contentDescription = null,
             modifier = Modifier
-                .requiredSize(60.dp)
+                .requiredSize(50.dp)
                 .clip(CircleShape)
         )
         Text(

@@ -1,6 +1,7 @@
 package com.example.pizzata.ui.components.homapage
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,12 +26,14 @@ fun CardMenuFavViews(
     image: Int,
     title: String,
     price: String,
+    navigate: () -> Unit,
     modifier: Modifier = Modifier,
 ){
     Column(
         modifier = Modifier
             .width(156.dp)
             .height(200.dp)
+            .clickable { navigate() },
     ) {
         Image(
             painter = painterResource(image),
@@ -67,7 +70,8 @@ fun CardMenuFavPreview(){
         CardMenuFavViews(
             R.drawable.menu1,
             "Yellow Creamy Pizza",
-            "172.000"
+            "172.000",
+            {}
         )
     }
 }

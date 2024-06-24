@@ -42,6 +42,7 @@ import com.example.pizzata.ui.theme.PizzaTATheme
 import com.example.pizzata.ui.theme.PrimaryBackgroundColor
 import com.example.pizzata.ui.theme.PrimaryColor
 import com.example.pizzata.ui.navigation.NavigationItem
+import com.example.pizzata.ui.screen.menu.MenuScreenContent
 import com.example.pizzata.ui.screen.order.OrderScreen
 
 @Composable
@@ -53,10 +54,9 @@ fun PizzaApp(
     val currentRoute = navBackStackEntry?.destination?.route
     val screenWithoutBottomBar: List<String?> =
         listOf(
-//            Screen.Splash1.route,
-//            Screen.Splash2.route,
             Screen.Login.route,
             Screen.Register.route,
+            Screen.Menu.route,
             Screen.EditProfile.route,
             Screen.ChangePassword.route,
             Screen.TrashureMarket.route,
@@ -97,6 +97,13 @@ fun PizzaApp(
             }
             composable(Screen.Order.route){
                 OrderScreen()
+            }
+            composable(Screen.Menu.route){
+                MenuScreenContent(
+                    navigateBack = {
+                        navController.navigateUp()
+                    }
+                )
             }
         }
     }
@@ -170,7 +177,8 @@ fun BottomBar(
                             restoreState = true
                             launchSingleTop = true
                         }
-                    }
+                    },
+                    selectedContentColor = if ( currentRoute == item.screen.route) PrimaryColor else Color.Gray
                 )
             }
         }

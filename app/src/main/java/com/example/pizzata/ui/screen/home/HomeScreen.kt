@@ -30,6 +30,7 @@ import com.example.pizzata.ui.components.homapage.BannerSlider
 import com.example.pizzata.ui.components.homapage.CardActivityViews
 import com.example.pizzata.ui.components.homapage.CardCategoryViews
 import com.example.pizzata.ui.components.homapage.CardMenuFavViews
+import com.example.pizzata.ui.components.homapage.CardRewardsViews
 import com.example.pizzata.ui.components.homapage.CategoryItem
 import com.example.pizzata.ui.components.homapage.HomeSection
 import com.example.pizzata.ui.theme.PizzaTATheme
@@ -178,10 +179,7 @@ fun MenuCategory(
                 image = menu.image,
                 title = menu.title,
                 price = menu.price,
-                modifier = Modifier
-                    .clickable {
-                        navigateToMenu()
-                    }
+                navigate = navigateToMenu
             )
         }
     }
@@ -235,13 +233,13 @@ fun Category(
     ) {
         CardCategoryViews(
             icon = R.drawable.pizza,
-            title = stringResource(R.string.saldo),
-            input = 30000
+            title = stringResource(R.string.slice),
+            input = 2
         )
-        CardCategoryViews(
+        CardRewardsViews(
             icon = R.drawable.pizza,
-            title = stringResource(R.string.poin),
-            input = 3000
+            title = stringResource(R.string.rewards),
+            input = 2
         )
     }
 }
