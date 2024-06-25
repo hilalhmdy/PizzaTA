@@ -1,5 +1,6 @@
 package com.example.pizzata.ui.components.homapage
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pizzata.R
+import com.example.pizzata.ui.theme.BorderCard
 import com.example.pizzata.ui.theme.PizzaTATheme
 
 @Composable
@@ -29,7 +31,9 @@ fun CardCategoryViews(
     Card(
         modifier = modifier
             .width(142.dp),
-        shape = RoundedCornerShape(10.dp)
+        shape = RoundedCornerShape(10.dp),
+        elevation = 0.dp,
+        border = BorderStroke(0.5.dp, BorderCard)
     ){
         Row(
             modifier = modifier
