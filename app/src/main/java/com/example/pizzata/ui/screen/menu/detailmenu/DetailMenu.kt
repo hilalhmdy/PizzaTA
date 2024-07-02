@@ -22,6 +22,7 @@ import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableIntStateOf
@@ -31,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
@@ -41,14 +43,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pizzata.R
+import com.example.pizzata.ui.components.menu.detailmenu.DescribeMenuLayout
+import com.example.pizzata.ui.components.menu.detailmenu.ProductCounter
+import com.example.pizzata.ui.screen.home.BannerHome
+import com.example.pizzata.ui.theme.BorderCard
 import com.example.pizzata.ui.theme.PizzaTATheme
+import com.example.pizzata.ui.theme.PrimaryBackgroundColor
 import com.example.pizzata.ui.theme.PrimaryColor
 import com.example.pizzata.ui.theme.Shapes
 
-
 @Composable
-fun DetailMenuOrder() {
-    var quantity = remember { mutableIntStateOf(1) }
+fun DetailMenuOrder(
+    id : Int,
+    image : Int,
+    count: Int,
+    onProductCountChanged: (count: Int) -> Unit,
+    navigateBack : () -> Unit,
+    modifier: Modifier = Modifier,
+){
     var selectedCrust = remember { mutableStateOf("Original") }
     var note = remember { mutableStateOf(TextFieldValue("")) }
 
@@ -56,79 +68,75 @@ fun DetailMenuOrder() {
         bottomBar = {
             BottomButtonDetail()
         },
-        content = { paddingValues ->
-            LazyColumn(
+    ){ padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(padding)
+        ) {
+            Box(
+                contentAlignment = Alignment.Center,
                 modifier = Modifier
+                    .height(200.dp)
                     .fillMaxSize()
-                    .padding(paddingValues)
             ) {
-                item {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        ImageSection()
-                        Spacer(modifier = Modifier.height(16.dp))
-                        DescriptionSection()
-                        Spacer(modifier = Modifier.height(16.dp))
-                        CrustSelection(selectedCrust.value) { selectedCrust.value = it }
-                        Spacer(modifier = Modifier.height(16.dp))
-                        NoteSection(note.value) { note.value = it }
-                        Spacer(modifier = Modifier.height(16.dp))
-                        QuantitySelector(
-                            quantity = quantity.intValue,
-                            onIncrease = quantity.intValue ++,
-                            onDecrease = { if (quantity.intValue > 1) quantity.intValue-- }
-                        )
-                    }
-                }
+                Image(
+                    painter = painterResource(image),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
+
             }
+            DescribeMenuLayout(
+                1,
+                "Full Creamy Pizza",
+                "Pizza enak dengan tambahan saous yang menyegarkan dipadukan dengan karie ayam",
+                "78.000"
+            )
+
+            CrustSelection(
+                selectedCrust  = selectedCrust.value
+            ) { selectedCrust.value = it }
+
+            NoteSection(note.value
+            ) { note.value = it }
+
+            ProductCounter(
+                orderCount = count,
+                onProductIncreased = { onProductCountChanged(count + 1) },
+                onProductDecreased = { if(count>0) onProductCountChanged(count - 1) },
+                modifier = Modifier
+                    .padding(top = 30.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
         }
-    )
-}
-
-@Composable
-fun ImageSection() {
-    val image: Painter = painterResource(id = R.drawable.banner1) // Ganti dengan id gambar Anda
-    Image(
-        painter = image,
-        contentDescription = null,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .clip(Shapes.medium)
-    )
-}
-
-@Composable
-fun DescriptionSection() {
-    Column {
-        Text(
-            text = "Fruit Creamy Pizza",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "78.000",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "Pizza dengan campuran keju dan daging dan super pizza dengan campuran keju dan daging",
-            fontSize = 16.sp
-        )
     }
 }
 
+
 @Composable
-fun CrustSelection(selectedCrust: String, onCrustSelected: (String) -> Unit) {
-    Column {
+fun CloseButton(
+
+){
+
+}
+
+
+@Composable
+fun CrustSelection(
+    selectedCrust: String,
+    onCrustSelected: (String) -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp, vertical = 10.dp)
+    ) {
         Text(
             text = "Pilih Pinggiran",
-            fontSize = 20.sp,
+            fontSize = 14.sp,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -137,7 +145,13 @@ fun CrustSelection(selectedCrust: String, onCrustSelected: (String) -> Unit) {
         ) {
             RadioButton(
                 selected = selectedCrust == "Original",
-                onClick = { onCrustSelected("Original") }
+                onClick = { onCrustSelected("Original") },
+                colors = RadioButtonColors(
+                    selectedColor = PrimaryColor,
+                    unselectedColor = Color.Gray,
+                    disabledSelectedColor = PrimaryColor,
+                    disabledUnselectedColor = PrimaryColor
+                    )
             )
             Text(text = "Original")
         }
@@ -146,7 +160,13 @@ fun CrustSelection(selectedCrust: String, onCrustSelected: (String) -> Unit) {
         ) {
             RadioButton(
                 selected = selectedCrust == "Cheese",
-                onClick = { onCrustSelected("Cheese") }
+                onClick = { onCrustSelected("Cheese") },
+                colors = RadioButtonColors(
+                    selectedColor = PrimaryColor,
+                    unselectedColor = Color.Gray,
+                    disabledSelectedColor = PrimaryColor,
+                    disabledUnselectedColor = PrimaryColor
+                )
             )
             Text(text = "Cheese")
         }
@@ -154,27 +174,35 @@ fun CrustSelection(selectedCrust: String, onCrustSelected: (String) -> Unit) {
 }
 
 @Composable
-fun NoteSection(note: TextFieldValue, onNoteChange: (TextFieldValue) -> Unit) {
-    Column {
+fun NoteSection(
+    note: TextFieldValue,
+    onNoteChange: (TextFieldValue) -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 20.dp, vertical = 10.dp)
+    ) {
         Text(
             text = "Note to restaurant",
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         BasicTextField(
             value = note,
             onValueChange = onNoteChange,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
-                .border(1.dp, Color.Gray, Shapes.small)
+                .border(1.dp, BorderCard, Shapes.large)
                 .padding(8.dp),
             decorationBox = { innerTextField ->
                 if (note.text.isEmpty()) {
                     Text(
                         text = "Add your request",
-                        color = Color.Gray
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .padding(top = 6.dp, start = 10.dp)
                     )
                 }
                 innerTextField()
@@ -183,36 +211,6 @@ fun NoteSection(note: TextFieldValue, onNoteChange: (TextFieldValue) -> Unit) {
     }
 }
 
-@Composable
-fun QuantitySelector(
-    quantity: Int,
-    onIncrease: Int,
-    onDecrease: () -> Unit
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Button(
-            onClick = {},
-            modifier = Modifier
-                .size(36.dp),
-            colors = ButtonDefaults.buttonColors(Color.Gray)
-        ) {
-            Text(text = "-", fontSize = 20.sp)
-        }
-        Spacer(modifier = Modifier.width(16.dp))
-        Text(text = quantity.toString(), fontSize = 20.sp)
-        Spacer(modifier = Modifier.width(16.dp))
-        Button(
-            onClick = {  },
-            modifier = Modifier.size(36.dp),
-            colors = ButtonDefaults.buttonColors(Color.Gray)
-        ) {
-            Text(text = "+", fontSize = 20.sp)
-        }
-    }
-}
 
 @Composable
 fun BottomButtonDetail() {
@@ -246,11 +244,16 @@ fun BottomButtonDetail() {
     }
 }
 
-
 @Composable
 @Preview(showBackground = true)
 fun DetailMenuScreenPreview(){
     PizzaTATheme {
-        DetailMenuOrder()
+        DetailMenuOrder(
+            121,
+            R.drawable.menudetail2,
+            0,
+            {},
+            {}
+        )
     }
 }
