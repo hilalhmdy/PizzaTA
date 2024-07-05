@@ -3,6 +3,7 @@ package com.example.pizzata.ui.screen.menu.detailmenu
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,16 +12,22 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.Card
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonColors
 import androidx.compose.material3.Scaffold
@@ -36,6 +43,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -87,8 +95,17 @@ fun DetailMenuOrder(
                     modifier = Modifier
                         .fillMaxSize()
                 )
-
             }
+
+            CloseButton(
+                navigateBack = { navigateBack()},
+                modifier = modifier
+                    .offset(
+                        x= (20).dp,
+                        y = (-180).dp
+                    )
+            )
+
             DescribeMenuLayout(
                 1,
                 "Full Creamy Pizza",
@@ -115,14 +132,33 @@ fun DetailMenuOrder(
     }
 }
 
-
 @Composable
 fun CloseButton(
-
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
 ){
-
+    Card(
+        backgroundColor = Color.White,
+        modifier = modifier
+            .height(30.dp)
+            .width(30.dp)
+            .clip(RoundedCornerShape(30.dp))
+            .clickable { navigateBack() }
+    ){
+        Icon(
+            imageVector = Icons.Default.Close,
+            contentDescription = null
+        )
+    }
 }
 
+@Composable
+@Preview(showBackground = true)
+fun ClosePreview(){
+    PizzaTATheme {
+    CloseButton({})
+    }
+}
 
 @Composable
 fun CrustSelection(
