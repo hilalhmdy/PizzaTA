@@ -1,5 +1,6 @@
 package com.example.pizzata.ui.screen.menu
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -70,7 +71,7 @@ fun MenuScreen(
     viewModel.menuState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when(uiState){
             is UiState.Loading -> {
-                viewModel.getAllNews()
+                viewModel.getAllMenu()
             }
             is UiState.Success -> {
                 MenuScreenContent(
@@ -123,9 +124,10 @@ fun MenuScreenContent(
                     price = data.price,
                     describe = data.describe,
                     onClick = {},
-                    modifier = modifier
+                    modifier = Modifier
                         .clickable {
                             navigateToDetailMenu(data.id)
+                            Log.i("Data id = ", data.id.toString())
                         }
                 )
             }

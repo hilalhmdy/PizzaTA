@@ -28,10 +28,10 @@ class DetailMenuViewModel (
         )
     }
 
-    fun getMenuById(iPhoneId: Long) {
+    fun getMenuById(menu: Long) {
         viewModelScope.launch {
             _menuState.value = UiState.Loading
-            _menuState.value = UiState.Success(repository.getMenuById(iPhoneId))
+            _menuState.value = UiState.Success(repository.getMenuById(menu))
         }
     }
 

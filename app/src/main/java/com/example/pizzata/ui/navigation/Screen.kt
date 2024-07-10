@@ -9,7 +9,7 @@ sealed class Screen(val route: String) {
     object Menu  : Screen("menu")
     object Login    : Screen("login")
     object Register : Screen("register")
-    object DetailMenu : Screen("detail_menu") {
+    object DetailMenu : Screen("menu/{id}") {
         fun createRoute(id: Long) = "menu/$id"
     }
 }

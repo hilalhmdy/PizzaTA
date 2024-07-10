@@ -102,7 +102,6 @@ fun PizzaApp(
                     },
                     navigateToDetailMenu = { id ->
                         navController.navigate(Screen.DetailMenu.createRoute(id))
-
                     }
                 )
             }

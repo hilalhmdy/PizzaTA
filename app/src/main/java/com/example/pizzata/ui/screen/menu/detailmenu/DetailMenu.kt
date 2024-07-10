@@ -1,6 +1,7 @@
 package com.example.pizzata.ui.screen.menu.detailmenu
 
 import Injection
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -48,6 +49,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -83,10 +85,13 @@ fun DetailMenuScreen(
         when (menuState) {
             is UiState.Loading -> {
                 viewModel.getMenuById(id)
+                Log.i("Data detail id =", id.toString())
             }
+
             is UiState.Success -> {
                 val data = menuState.data
                 val state = viewModel.detailMenuUIState
+
                 DetailMenuOrder(
                     image = data.image,
                     title = data.title,
@@ -139,13 +144,16 @@ fun DetailMenuOrder(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .height(200.dp)
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .background(color = Color.Blue)
             ) {
                 Image(
                     painter = painterResource(image),
                     contentDescription = null,
+                    contentScale = ContentScale.Crop,  // Atur sesuai kebutuhan Anda
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
+                        .height(200.dp)
                 )
             }
 

@@ -18,14 +18,14 @@ class MenuViewModel (
     val menuState: StateFlow<UiState<List<Menu>>>
         get() = _menuState
 
-    fun getAllNews() {
+    fun getAllMenu() {
         viewModelScope.launch {
             repository.getMenuList()
                 .catch {
                     _menuState.value = UiState.Error(it.message.toString())
                 }
-                .collect { orderRewards ->
-                    _menuState.value = UiState.Success(orderRewards)
+                .collect { menu ->
+                    _menuState.value = UiState.Success(menu)
                 }
         }
     }
