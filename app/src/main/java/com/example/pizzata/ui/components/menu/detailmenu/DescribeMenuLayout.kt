@@ -23,21 +23,20 @@ import com.example.pizzata.ui.theme.PizzaTATheme
 
 @Composable
 fun DescribeMenuLayout(
-    id : Int,
     title: String,
     describe : String,
     price : String,
     modifier: Modifier = Modifier,
 ){
     Column(
-        modifier = Modifier
+        modifier = modifier
             .height(120.dp)
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 20.dp)
     ) {
         Row(
         ) {
-            Column( modifier = Modifier
+            Column( modifier = modifier
                 .weight(1.0f)
             ) {
                 Text(
@@ -72,7 +71,6 @@ fun DescribeMenuLayout(
 fun DescribeMenuPreview(){
     PizzaTATheme {
         DescribeMenuLayout(
-            12,
             "Full Creamy Pizza",
             "Pizza dengan campuran keju dan daging dan super pizza dengan campuran keju dan daging" ,
             "78.000"

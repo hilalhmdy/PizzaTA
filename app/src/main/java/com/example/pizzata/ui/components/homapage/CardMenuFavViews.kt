@@ -26,14 +26,12 @@ fun CardMenuFavViews(
     image: Int,
     title: String,
     price: String,
-    navigate: () -> Unit,
     modifier: Modifier = Modifier,
 ){
     Column(
-        modifier = Modifier
+        modifier = modifier
             .width(156.dp)
             .height(200.dp)
-            .clickable { navigate() },
     ) {
         Image(
             painter = painterResource(image),
@@ -43,7 +41,7 @@ fun CardMenuFavViews(
                 .fillMaxWidth()
 
         )
-        Column(modifier = Modifier
+        Column(modifier = modifier
             .padding(top =6.dp)
         ){
             Text(
@@ -71,7 +69,6 @@ fun CardMenuFavPreview(){
             R.drawable.menu1,
             "Yellow Creamy Pizza",
             "172.000",
-            {}
         )
     }
 }

@@ -14,56 +14,56 @@ val dummyMenu = listOf(
     Menu(
         1,
         R.drawable.menu1,
-        "Yummy Creammy Pizza",
+        "Yummy Creamy Pizza",
         "Pizza dengan campuran keju dan daging",
         "172.000"
     ),
     Menu(
         2,
         R.drawable.menu1,
-        "Yummy Creammy Pizza",
+        "Garlic Pizza",
         "Pizza dengan campuran keju dan daging",
         "172.000"
     ),
     Menu(
         3,
         R.drawable.menu1,
-        "Yummy Creammy Pizza",
+        "Cheesy Creamy Pizza",
         "Pizza dengan campuran keju dan daging",
         "172.000"
     ),
     Menu(
-        1,
+        4,
         R.drawable.menu1,
-        "Yummy Creammy Pizza",
+        "Cow Creamy Pizza",
         "Pizza dengan campuran keju dan daging",
         "172.000"
     ),
     Menu(
-        2,
+        5,
         R.drawable.menu1,
-        "Yummy Creammy Pizza",
+        "Cat Creamy Pizza",
         "Pizza dengan campuran keju dan daging",
         "172.000"
     ),
     Menu(
-        3,
+        6,
         R.drawable.menu1,
-        "Yummy Creammy Pizza",
+        "Pasta Creamy Pizza",
         "Pizza dengan campuran keju dan daging",
         "172.000"
     ),
     Menu(
-        3,
+        7,
         R.drawable.menu1,
-        "Yummy Creammy Pizza",
+        "Sos Creamy Pizza",
         "Pizza dengan campuran keju dan daging",
         "172.000"
     ),
     Menu(
-        3,
+        8,
         R.drawable.menu1,
-        "Yummy Creammy Pizza",
+        "Onion Creamy Pizza",
         "Pizza dengan campuran keju dan daging",
         "172.000"
     ),

@@ -1,5 +1,6 @@
 package com.example.pizzata.ui.screen.menu.detailmenu
 
+import Injection
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,9 +33,12 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,20 +54,68 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.pizzata.R
+import com.example.pizzata.ui.common.UiState
 import com.example.pizzata.ui.components.menu.detailmenu.DescribeMenuLayout
 import com.example.pizzata.ui.components.menu.detailmenu.ProductCounter
 import com.example.pizzata.ui.screen.home.BannerHome
 import com.example.pizzata.ui.theme.BorderCard
 import com.example.pizzata.ui.theme.PizzaTATheme
-import com.example.pizzata.ui.theme.PrimaryBackgroundColor
 import com.example.pizzata.ui.theme.PrimaryColor
 import com.example.pizzata.ui.theme.Shapes
+import com.example.pizzata.utils.ViewModelFactory
+
+@Composable
+fun DetailMenuScreen(
+    id : Long,
+    viewModel: DetailMenuViewModel = viewModel(
+        factory =  ViewModelFactory(
+            Injection.provideRepository()
+        )
+    ),
+    navigateBack: () -> Unit
+){
+    var isLoading by remember{ mutableStateOf(false)}
+    viewModel.menuState.collectAsState(initial = UiState.Loading).value.let { menuState ->
+        when (menuState) {
+            is UiState.Loading -> {
+                viewModel.getMenuById(id)
+            }
+            is UiState.Success -> {
+                val data = menuState.data
+                val state = viewModel.detailMenuUIState
+                DetailMenuOrder(
+                    image = data.image,
+                    title = data.title,
+                    price = data.price,
+                    describe = data.describe,
+                    count = state.value.totalMenu,
+                    onProductCountChanged = { totalMenu ->
+                        viewModel.updateTotalMenu(totalMenu)
+                    },
+                    navigateBack = { navigateBack() })
+            }
+            is UiState.Error -> {
+                isLoading = false
+            }
+
+            else -> {
+
+            }
+        }
+    }
+}
+
 
 @Composable
 fun DetailMenuOrder(
-    id : Int,
     image : Int,
+    title : String,
+    price : String,
+    describe : String,
     count: Int,
     onProductCountChanged: (count: Int) -> Unit,
     navigateBack : () -> Unit,
@@ -107,10 +159,9 @@ fun DetailMenuOrder(
             )
 
             DescribeMenuLayout(
-                1,
-                "Full Creamy Pizza",
-                "Pizza enak dengan tambahan saous yang menyegarkan dipadukan dengan karie ayam",
-                "78.000"
+                title = title,
+                describe = describe,
+                price = price
             )
 
             CrustSelection(
@@ -285,8 +336,10 @@ fun BottomButtonDetail() {
 fun DetailMenuScreenPreview(){
     PizzaTATheme {
         DetailMenuOrder(
-            121,
             R.drawable.menudetail2,
+            "Full Creamy pizza",
+            "78.000",
+            "Pizza dengan campuran keju dan daging dan super pizza dengan campuran keju dan daging",
             0,
             {},
             {}

@@ -30,6 +30,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
@@ -42,53 +43,54 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pizzata.model.Category
 import com.example.pizzata.model.Menu
 import com.example.pizzata.model.dummyCategory
 import com.example.pizzata.model.dummyMenu
+import com.example.pizzata.ui.common.UiState
 import com.example.pizzata.ui.components.homapage.CategoryItem
 import com.example.pizzata.ui.components.menu.CardMenuOrder
+import com.example.pizzata.ui.screen.home.HomeScreenContent
+import com.example.pizzata.ui.screen.home.HomeViewModel
 import com.example.pizzata.ui.theme.PizzaTATheme
 import com.example.pizzata.ui.theme.PrimaryColor
 import com.example.pizzata.ui.theme.Shapes
+import com.example.pizzata.utils.ViewModelFactory
 
 
-//@Composable
-//fun MenuScreenContent(
-//    navigateBack: () -> Unit,
-//    modifier: Modifier = Modifier,
-//){
-//    Scaffold(
-//        topBar = {
-//            TopBarMenuOrder(
-//                navigateBack = navigateBack ,
-//                title = "Menu"
-//            )
-//
-//        }
-//    ) {innerPadding ->
-//        Column(
-//            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            modifier = modifier
-//                .verticalScroll(rememberScrollState())
-//                .padding(innerPadding)
-//                .fillMaxSize()
-//        ){
-//            CategoryRow(
-//                dummyCategory
-//            )
-//            Spacer(modifier = Modifier.height(20.dp))
-//            ListCardMenu(
-//                dummyMenu
-//            )
-//        }
-//    }
-//}
+@Composable
+fun MenuScreen(
+    navigateBack: () -> Unit,
+    navigateToDetailMenu: (Long) -> Unit,
+    viewModel: MenuViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepository())
+    )
+){
+    viewModel.menuState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when(uiState){
+            is UiState.Loading -> {
+                viewModel.getAllNews()
+            }
+            is UiState.Success -> {
+                MenuScreenContent(
+                    navigateBack = navigateBack,
+                    navigateToDetailMenu = navigateToDetailMenu
+                )
+            }
+            is UiState.Error -> {}
+            else -> {
+
+            }
+        }
+
+    }
+}
 
 @Composable
 fun MenuScreenContent(
     navigateBack: () -> Unit,
+    navigateToDetailMenu:  (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -120,7 +122,11 @@ fun MenuScreenContent(
                     title = data.title,
                     price = data.price,
                     describe = data.describe,
-                    onClick = {}
+                    onClick = {},
+                    modifier = modifier
+                        .clickable {
+                            navigateToDetailMenu(data.id)
+                        }
                 )
             }
         }
@@ -281,6 +287,6 @@ fun ListCardMenu(
 @Preview(showBackground = true)
 fun MenuScreenPreview(){
     PizzaTATheme {
-        MenuScreenContent({})
+        MenuScreenContent({}, {})
     }
 }

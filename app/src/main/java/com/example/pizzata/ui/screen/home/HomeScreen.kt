@@ -1,7 +1,6 @@
 package com.example.pizzata.ui.screen.home
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -17,15 +16,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pizzata.R
 import androidx.compose.material.Text
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pizzata.model.ActivityNews
 import com.example.pizzata.model.Category
 import com.example.pizzata.model.Menu
 import com.example.pizzata.model.dummyActivity
 import com.example.pizzata.model.dummyCategory
 import com.example.pizzata.model.dummyMenu
+import com.example.pizzata.ui.common.UiState
 import com.example.pizzata.ui.components.homapage.BannerSlider
 import com.example.pizzata.ui.components.homapage.CardActivityViews
 import com.example.pizzata.ui.components.homapage.CardCategoryViews
@@ -35,46 +38,33 @@ import com.example.pizzata.ui.components.homapage.CategoryItem
 import com.example.pizzata.ui.components.homapage.HomeSection
 import com.example.pizzata.ui.theme.PizzaTATheme
 import com.example.pizzata.ui.theme.PrimaryColor
+import com.example.pizzata.utils.ViewModelFactory
 
-//import com.example.trashure.di.Injection
-//import com.example.trashure.model.*
-//import com.example.trashure.ui.common.UiState
-//import com.example.trashure.ui.components.homepage.*
-//import com.example.trashure.ui.theme.Blue_1
-//import com.example.trashure.ui.theme.Green_1
-//import com.example.trashure.ui.theme.PrimaryBackgroundColor
-//import com.example.trashure.ui.theme.TrashureTheme
-//import com.example.trashure.utils.ViewModelFactory
 
-//@Composable
-//fun HomeScreen(
-//    navigateToMarketPlace : () -> Unit,
-//    navigateToSellPage : () -> Unit,
-//    navigateToDetail: (Long) -> Unit,
-//    viewModel: HomeViewModel = viewModel(
-//        factory = ViewModelFactory(Injection.provideRepository(context = LocalContext.current))
-//    )
-//){
-//    viewModel.newsState.collectAsState(initial = UiState.Loading).value.let { uiState ->
-//        when(uiState){
-//            is UiState.Loading -> {
-//                viewModel.getAllNews()
-//            }
-//            is UiState.Success -> {
-//                HomeScreenContent(
-//                    navigateToMarketPlace = navigateToMarketPlace,
-//                    navigateToSellPage = navigateToSellPage,
-//                    navigateToDetail = navigateToDetail
-//                )
-//            }
-//            is UiState.Error -> {}
-//            else -> {
-//
-//            }
-//        }
-//
-//    }
-//}
+@Composable
+fun HomeScreen(
+    navigateToMenu: () -> Unit,
+    viewModel: HomeViewModel = viewModel(
+        factory = ViewModelFactory(Injection.provideRepository())
+    )
+){
+    viewModel.menuState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when(uiState){
+            is UiState.Loading -> {
+                viewModel.getAllNews()
+            }
+            is UiState.Success -> {
+                HomeScreenContent(
+                    navigateToMenu = navigateToMenu
+                )
+            }
+            is UiState.Error -> {}
+            else -> {
+
+            }
+        }
+    }
+}
 
 @Composable
 fun HomeScreenContent(
@@ -179,7 +169,10 @@ fun MenuCategory(
                 image = menu.image,
                 title = menu.title,
                 price = menu.price,
-                navigate = navigateToMenu
+                modifier = Modifier
+                    .clickable {
+                        navigateToMenu()
+                    }
             )
         }
     }

@@ -32,17 +32,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.pizzata.ui.navigation.Screen
-import com.example.pizzata.ui.screen.home.HomeScreenContent
 import com.example.pizzata.ui.theme.PizzaTATheme
 import com.example.pizzata.ui.theme.PrimaryBackgroundColor
 import com.example.pizzata.ui.theme.PrimaryColor
 import com.example.pizzata.ui.navigation.NavigationItem
-import com.example.pizzata.ui.screen.menu.MenuScreenContent
+import com.example.pizzata.ui.screen.home.HomeScreen
+import com.example.pizzata.ui.screen.menu.MenuScreen
+import com.example.pizzata.ui.screen.menu.detailmenu.DetailMenuScreen
 import com.example.pizzata.ui.screen.order.OrderScreen
 
 @Composable
@@ -57,13 +60,7 @@ fun PizzaApp(
             Screen.Login.route,
             Screen.Register.route,
             Screen.Menu.route,
-            Screen.EditProfile.route,
-            Screen.ChangePassword.route,
-            Screen.TrashureMarket.route,
-            Screen.MarketPage.route,
-            Screen.UMKMMarket.route,
-            Screen.SellPage.route,
-            Screen.DetailNews.route,
+            Screen.DetailMenu.route,
             Screen.ScanPage.route
         )
     Scaffold(
@@ -89,7 +86,7 @@ fun PizzaApp(
             modifier = Modifier.padding(innerPadding)
         ){
             composable(Screen.Home.route){
-                HomeScreenContent(
+                HomeScreen(
                     navigateToMenu = {
                         navController.navigate(Screen.Menu.route)
                     }
@@ -99,7 +96,23 @@ fun PizzaApp(
                 OrderScreen()
             }
             composable(Screen.Menu.route){
-                MenuScreenContent(
+                MenuScreen(
+                    navigateBack = {
+                        navController.navigateUp()
+                    },
+                    navigateToDetailMenu = { id ->
+                        navController.navigate(Screen.DetailMenu.createRoute(id))
+
+                    }
+                )
+            }
+            composable(
+                route = Screen.DetailMenu.route,
+                arguments = listOf(navArgument("id") { type = NavType.LongType }),
+            ){
+                val id = it.arguments?.getLong("id") ?: -1L
+                DetailMenuScreen(
+                    id = id,
                     navigateBack = {
                         navController.navigateUp()
                     }
@@ -224,6 +237,6 @@ fun MyUI(
 @Composable
 fun BottomPreview() {
     PizzaTATheme{
-        PizzaApp()
+        MyUI({})
     }
 }
