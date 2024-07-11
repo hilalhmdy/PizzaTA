@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.pizzata.ui.theme.PizzaTATheme
+import com.example.pizzata.ui.theme.PrimaryColor
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -89,7 +90,7 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
                 text = {
                     Text(
                         text = tab.title,
-                        color = Color(0xFF1A395A)
+                        color = if (pagerState.currentPage == index) PrimaryColor else Color.Gray
                     )
                 },
                 selected = pagerState.currentPage == index,

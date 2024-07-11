@@ -1,4 +1,4 @@
-import com.example.trashure.data.repository.PizzaRepository
+import com.example.pizzata.data.repository.PizzaRepository
 
 object Injection {
     fun provideRepository(): PizzaRepository {

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.pizzata.ui.screen.home.HomeViewModel
 import com.example.pizzata.ui.screen.menu.MenuViewModel
 import com.example.pizzata.ui.screen.menu.detailmenu.DetailMenuViewModel
-import com.example.trashure.data.repository.PizzaRepository
+import com.example.pizzata.data.repository.PizzaRepository
 
 class ViewModelFactory( private var repository: PizzaRepository) :
 

@@ -7,6 +7,6 @@ import com.example.pizzata.ui.screen.order.ongoing.OrderProgressScreen
 typealias ComposableFun = @Composable () -> Unit
 
 sealed class TabItem(var title: String, var screen: ComposableFun) {
-    object OrderProgress : TabItem( "Berlangsung", { OrderProgressScreen() })
-    object OrderFinish : TabItem( "Selesai", { OrderFinishScreen() })
+    object OrderProgress : TabItem( "On Going", { OrderProgressScreen() })
+    object OrderFinish : TabItem( "History", { OrderFinishScreen() })
 }

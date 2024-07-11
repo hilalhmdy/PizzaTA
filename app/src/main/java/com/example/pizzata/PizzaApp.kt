@@ -44,6 +44,7 @@ import com.example.pizzata.ui.theme.PrimaryBackgroundColor
 import com.example.pizzata.ui.theme.PrimaryColor
 import com.example.pizzata.ui.navigation.NavigationItem
 import com.example.pizzata.ui.screen.home.HomeScreen
+import com.example.pizzata.ui.screen.inbox.InboxScreenContent
 import com.example.pizzata.ui.screen.menu.MenuScreen
 import com.example.pizzata.ui.screen.menu.detailmenu.DetailMenuScreen
 import com.example.pizzata.ui.screen.order.OrderScreen
@@ -116,6 +117,9 @@ fun PizzaApp(
                         navController.navigateUp()
                     }
                 )
+            }
+            composable(Screen.Inbox.route){
+                InboxScreenContent()
             }
         }
     }

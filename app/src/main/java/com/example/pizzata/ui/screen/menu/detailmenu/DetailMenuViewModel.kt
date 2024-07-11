@@ -4,9 +4,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pizzata.model.Menu
-import com.example.pizzata.model.News
 import com.example.pizzata.ui.common.UiState
-import com.example.trashure.data.repository.PizzaRepository
+import com.example.pizzata.data.repository.PizzaRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
